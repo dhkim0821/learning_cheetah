@@ -5,6 +5,7 @@ from stable_baselines.common.vec_env import SubprocVecEnv
 from stable_baselines import PPO2
 
 from pybullet_envs.minitaur.envs.minitaur_extended_env import MinitaurExtendedEnv
+from pyenv import pointmass
 
 
 def create_env(name, render=False):
@@ -13,6 +14,8 @@ def create_env(name, render=False):
     elif name == 'minitaur':
         env = MinitaurExtendedEnv(history_length=5,
                                   render=render)
+    elif name == 'pointmass':
+        env = pointmass.PointMassEnv()
     return env
 
 
@@ -37,7 +40,7 @@ def learning_rate_func(x):
 
 if __name__ == '__main__':
     # multiprocess environment
-    name = 'minitaur'
+    name = 'pointmass'
     n_cpu = 8
     # env = SubprocVecEnv([lambda: gym.make('CartPole-v1') for i in range(n_cpu)])
     env = SubprocVecEnv([lambda: create_env(name) for i in range(n_cpu)])
